@@ -38,7 +38,7 @@ var router = express.Router();
 app.use('/api', routes);
 
 // point static path to dist/public
-app.use('/', express.static(path.join(__dirname, '/public/dist/tweet-app/')));
+app.use('/', express.static(path.join(__dirname, '/twitter/dist/twitter/')));
 
 // Catch all other routes
 router.get('*', (req, res) => {
