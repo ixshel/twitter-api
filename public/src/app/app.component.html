@@ -1,0 +1,7 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<ul *ngFor="let item of (tweets$ | async)">
+  <li>
+    created at: {{ item.created_at }}</li>
+  <li>
+    text: {{ item.text }}</li>
+</ul>
