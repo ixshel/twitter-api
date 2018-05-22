@@ -10,12 +10,13 @@ import { TweetService } from './tweet.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  query: string;
   tweets$;
 
   constructor(private twitterService: TweetService) { }
 
   getTweets() {
-    this.tweets$ = this.twitterService.getTweetByUser();
+    this.tweets$ = this.twitterService.getTweetByUser(this.query);
     console.log('Tweets', this.tweets$);
   }
 

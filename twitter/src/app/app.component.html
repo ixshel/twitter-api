@@ -9,7 +9,7 @@
   <div>
     <form>
       <div class="form-group">
-        <input type="text">
+        <input [(ngModel)]="query" #ctrl="ngModel" name="query" placeholder="@ikyescamilla" type="text">
       </div>
       <a (click)="getTweets()">Search...</a>
     </form>

@@ -30,9 +30,9 @@ module.exports = {
 	},
 
 	getTimeline: (req, res) => {
-
+		console.log('*** Params ***', req.query);
 		twitter.getUserTimeline({
-			screen_name: 'nodejs',
+			screen_name: req.query.name,
 			count: '10'
 		}, (err => {
 			// case for Error message
