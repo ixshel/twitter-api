@@ -30,7 +30,6 @@ module.exports = {
 	},
 
 	getTimeline: (req, res) => {
-		console.log('*** Params ***', req.query);
 		twitter.getUserTimeline({
 			screen_name: req.query.name,
 			count: '10'
@@ -39,6 +38,20 @@ module.exports = {
 			res.status(400).json(err)
 		}), (success => {
 			// case for success
+			console.log(JSON.parse(success))
+			res.status(200).json(JSON.parse(success));
+		}));
+	},
+
+	getUserInfo: (req, res) => {
+		twitter.getUser({
+			screen_name: req.query.name,
+		}, (err => {
+			// case for Error message
+			res.status(400).json(err)
+		}), (success => {
+			// case for success
+			console.log(JSON.parse(success))
 			res.status(200).json(JSON.parse(success));
 		}));
 	}

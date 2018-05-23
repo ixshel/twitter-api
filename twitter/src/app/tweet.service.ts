@@ -12,7 +12,7 @@ export class TweetService {
 
   getTweetByUser(name): Observable<any> {
     return this._http
-      .get('/api/tweets', { params: new HttpParams().set('name', name)})
+      .get('/api/tweets', { params: new HttpParams().set('name', name) })
       .pipe(
         map(data => data),
         last(),
@@ -23,6 +23,16 @@ export class TweetService {
   getTweetByQuery(): Observable<any> {
     return this._http
       .get('/api/tweetsBySearch')
+      .pipe(
+        map(data => data),
+        last(),
+        catchError(error => error)
+      );
+  }
+
+  getUser(name): Observable<any> {
+    return this._http
+      .get('/api/user', { params: new HttpParams().set('name', name) })
       .pipe(
         map(data => data),
         last(),

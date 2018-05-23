@@ -11,13 +11,17 @@ import { TweetService } from './tweet.service';
 })
 export class AppComponent implements OnInit {
   query: string;
+  user$;
   tweets$;
 
   constructor(private twitterService: TweetService) { }
 
   getTweets() {
-    this.tweets$ = this.twitterService.getTweetByUser(this.query);
-    console.log('Tweets', this.tweets$);
+    this.tweets$ = this.twitterService.getTweetByUser('@' + this.query);
+  }
+
+  getUser() {
+    this.user$ = this.twitterService.getUser('@' + this.query);
   }
 
   ngOnInit() { }

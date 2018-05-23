@@ -1,35 +1,74 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="container">
-  <div class="header-wrapper row">
-    <div class="header-inside">
-      <h1>Tweeting...</h1>
+<!-- <div style="background-color: rgb(22, 107, 120)" class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+  <img class="mr-3" src="https://getbootstrap.com/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+  <div class="lh-100">
+    <h6 class="mb-0 text-white lh-100">Twitter API Example</h6>
+    <small>by Ixshel Escamilla</small>
+  </div>
+</div> -->
+
+<header class="header">
+  <div style="padding: 3rem;" class="lh-100">
+    <h2 class="mb-0 text-white lh-100">Twitter API Example</h2>
+    <small>by Ixshel Escamilla</small>
+  </div>
+</header>
+
+<div style="margin: 2rem auto" class="container">
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <form>
+        <label for="validationCustomUsername">Username</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+          </div>
+          <input [(ngModel)]="query" #ctrl="ngModel" name="query" type="text" class="form-control" id="validationCustomUsername" placeholder="Username"
+            aria-describedby="inputGroupPrepend" required>
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+        </div>
+
+        <button style="margin: 1.5rem auto" (click)="getUser(); getTweets()" type="button" class="btn btn-outline-primary">Search</button>
+      </form>
     </div>
+    <div *ngIf="(user$ | async) as user; else loading" class="col-md-6">
+      <div class="card flex-md-row mb-4 box-shadow h-md-250">
+        <div class="card-body d-flex flex-column align-items-start">
+          <strong class="d-inline-block mb-2 text-primary">{{user.name}}</strong>
+          <h6 class="mb-0">
+            <a class="text-dark" href="#">Status count: {{user.statuses_count}}</a>
+          </h6>
+          <div class="mb-1 text-muted">{{user.created_at}}</div>
+          <p style="max-width: 17rem;" class="card-text mb-auto">Followers: {{user.followers_count}}</p>
+          <p style="max-width: 17rem;" class="card-text mb-auto">Friends: {{user.friends_count}}</p>
+          <p style="max-width: 17rem;" class="card-text mb-auto">Statuses: {{user.statuses_count}}</p>
+          <a target="_blank" [href]="user.url">{{user.url}}</a>
+        </div>
+        <img class="card-img-right flex-auto d-none d-md-block" data-src="holder.js/200x250?theme=thumb" alt="{{user.name}}" style="width: 200px; height: 250px;"
+          [src]="user.profile_image_url_https" data-holder-rendered="true">
+      </div>
+    </div>
+
+    <ng-template class="col-md-6" #loading>
+      No user
+    </ng-template>
   </div>
 
-  <div>
-    <form>
-      <div class="form-group">
-        <input [(ngModel)]="query" #ctrl="ngModel" name="query" placeholder="@ikyescamilla" type="text">
+  <div style="text-align: left" class="list-group" *ngFor="let tweet of (tweets$ | async)">
+    <a style="max-width: 62rem; margin: 0 auto" class="list-group-item list-group-item-action flex-column align-items-start active">
+      <div class="d-flex w-100 justify-content-between">
+        <div class="mb-1">
+          <span style="color: red" class="fa fa-heart"></span>
+          <span>{{tweet.favorite_count}}</span>
+          <span style="color: blue;margin-left: 1rem;" class="fa fa-retweet"></span>
+          <span>{{tweet.retweet_count}}</span>
+        </div>
+        <small>{{tweet.created_at | date :'yyyy-dd-mm'}}</small>
       </div>
-      <a (click)="getTweets()">Search...</a>
-    </form>
+      <p class="mb-1" [innerHTML]="tweet.text"></p>
+    </a>
   </div>
 
-  <div class="tweet-list-container">
-    <h1 class="tweet-list-header">Tweets</h1>
-    <div *ngFor="let tweet of (tweets$ | async)" class="row">
-      <div class="profile">
-        <img src="{{tweet.user.profile_image_url}}" alt="image">
-        <h3 class="user-name">{{tweet.user.name}}</h3>
-        <p class="tweet-text" [innerHTML]="tweet.text"></p>
-        <p class="tweet-date">
-          <i>{{tweet.created_at | date :'yyyy-DD-mm'}}</i>
-        </p>
-        <p class="tweet-symbols">
-          <span class="fa fa-heart"></span> {{tweet.favorite_count}}
-          <span class="fa fa-retweet"></span> {{tweet.retweet_count}}
-        </p>
-      </div>
-    </div>
-  </div>
 </div>
